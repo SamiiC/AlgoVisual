@@ -9,18 +9,46 @@ const Grid = () => {
   let GridNodes = useRef(initNodeObj())
   const [start,setStart] = useState< NodeInterface | null >(null)
   const [end,setEnd] = useState< NodeInterface | null >(null)
+  const [wallnum,setWallnum] = useState<number>(0)
   
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
     let ClickedNode = GridNodes.current[rowNum][colNum]
 
-    if(start && end)
+    if(ClickedNode.Wall)
     {
-      console.log('already two points choosen')
+      ClickedNode.Wall = false;
+      setWallnum(wallnum - 1)
+      return;
+    }
+    if(node.ID === start?.ID)
+    {
+      setStart(null)
+      ClickedNode.Startpt = false;
+      ClickedNode.distFS = Infinity;
+      return;
+
+    }if(node.ID === end?.ID)
+    {
+      setEnd(null)
+      ClickedNode.Endpt = false;
+      ClickedNode.distFS = Infinity;
       return;
     }
 
-    if(!start && !end)
+    //may need to change state in future... just a placeholder for now
+    if(start && end)
+    {
+      console.log("hi sds")
+      ClickedNode.Wall = true;
+      setWallnum(wallnum + 1)
+      return;
+    }
+
+    //Start and end points choosen so anything after is wall
+
+
+    if(!start)
     {
       setStart({
         ...ClickedNode,
