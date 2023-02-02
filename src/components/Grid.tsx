@@ -1,4 +1,4 @@
-import { initNodeObj } from "../utility/utils"
+import { initNodeObj,convertGrid } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState } from "react"
@@ -12,6 +12,7 @@ const Grid = () => {
   const [wallnum,setWallnum] = useState<number>(0)
   
 
+
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
     let ClickedNode = GridNodes.current[rowNum][colNum]
 
@@ -20,7 +21,7 @@ const Grid = () => {
       ClickedNode.Wall = false;
       setWallnum(wallnum - 1)
       return;
-    }
+    } 
     if(node.ID === start?.ID)
     {
       setStart(null)

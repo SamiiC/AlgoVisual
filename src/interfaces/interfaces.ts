@@ -7,6 +7,6 @@ export interface NodeInterface {
      Startpt: boolean;
      Endpt: boolean;
      distFS: number;
-     previousCell: Node | null;
+     previousCell: NodeInterface | null;
      isDest: boolean;
 }

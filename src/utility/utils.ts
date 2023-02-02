@@ -37,3 +37,15 @@ export const initNodeObj = (): NodeInterface[][] => {
 
      return grid;
 };
+
+export const convertGrid = (grid: NodeInterface[][]): NodeInterface[] => {
+     let reducedArr: NodeInterface[] = [];
+
+     grid.map((row) => {
+          row.map((node) => {
+               reducedArr.push(node);
+          });
+     });
+
+     return reducedArr;
+};
