@@ -26,7 +26,7 @@ const get_neighbours = (
      return neighbours.filter((node) => !node.Visited);
 };
 
-const Dijkstra = (
+export const Dijkstra = (
      startNode: NodeInterface,
      endNode: NodeInterface,
      grid: NodeInterface[][]
@@ -42,11 +42,15 @@ const Dijkstra = (
           let curNode = Graphnodes.shift();
 
           if (!curNode) {
+               console.log("done3");
+
                return [visitedNodes];
           }
 
           if (curNode.Wall) continue;
           if (curNode.distFS === Infinity) {
+               console.log("done2");
+
                return [visitedNodes];
           }
 
@@ -55,14 +59,18 @@ const Dijkstra = (
 
           if (curNode.ID === endNode.ID) {
                curNode.isDest = true;
+               console.log(visitedNodes);
                return [visitedNodes];
           }
 
           let neighbours = get_neighbours(curNode, grid);
 
           for (let neighbour of neighbours) {
-               neighbour.distFS = curNode.distFS + 1;
-               neighbour.previousCell = curNode;
+               let alt = curNode.distFS + 1;
+               if (alt < neighbour.distFS) {
+                    neighbour.distFS = alt;
+                    neighbour.previousCell = curNode;
+               }
           }
      }
 };

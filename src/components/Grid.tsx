@@ -2,6 +2,7 @@ import { initNodeObj,convertGrid } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState } from "react"
+import { Dijkstra } from "../main/dijkstra"
 import Node from "./Node"
 
 const Grid = () => {
@@ -70,31 +71,35 @@ const Grid = () => {
   }
  
   return (
-    <div className="grid grid-cols-50Col overflow-auto w-full px-4 justify-start md:justify-center items-center my-3">
-     
-      {
-      GridNodes.current.map((ROW,rowNum : number) =>{
-        return (
-          <React.Fragment key = {rowNum}>
-          
-            {ROW.map((COL,colNum)=> {
-              return (
-                  <Node key = {colNum} id ={`node-${COL.row}-${COL.column}`} 
-                  onClick = {() => {
-                    NodeClicked(COL,rowNum,colNum);
+    <div>
+      <div className="grid grid-cols-50Col overflow-auto w-full px-4 justify-start md:justify-center items-center my-3">
+      
+        {
+        GridNodes.current.map((ROW,rowNum : number) =>{
+          return (
+            <React.Fragment key = {rowNum}>
+            
+              {ROW.map((COL,colNum)=> {
+                return (
+                    <Node key = {colNum} id ={`node-${COL.row}-${COL.column}`} 
+                    onClick = {() => {
+                      NodeClicked(COL,rowNum,colNum);
 
-                  }}
-                  
-                  {...COL}/>
-              )
-            })
-            }
-          </React.Fragment>
-        )
-      })
-    }
-
-    
+                    }}
+                    
+                    {...COL}/>
+                )
+              })
+              }
+            </React.Fragment>
+          )
+        })
+      }
+      
+      
+      </div>
+      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+      onClick = {()=>{Dijkstra(start,end,GridNodes.current)}} >Visualise</button>
     </div>
 
 
