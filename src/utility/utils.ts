@@ -49,3 +49,16 @@ export const convertGrid = (grid: NodeInterface[][]): NodeInterface[] => {
 
      return reducedArr;
 };
+
+export const getPath = (endNode: NodeInterface) => {
+     let curNode = endNode;
+     let pathNodes: NodeInterface[] = [];
+     while (curNode) {
+          pathNodes.push(curNode);
+
+          console.log(curNode);
+          curNode = curNode.previousCell;
+     }
+
+     return pathNodes;
+};

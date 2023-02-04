@@ -1,7 +1,7 @@
-import { initNodeObj,convertGrid } from "../utility/utils"
+import { initNodeObj,convertGrid,getPath } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
-import React, { useRef,useState } from "react"
+import React, { useRef,useState,useEffect } from "react"
 import { Dijkstra } from "../main/dijkstra"
 import Node from "./Node"
 
@@ -11,6 +11,7 @@ const Grid = () => {
   const [start,setStart] = useState< NodeInterface | null >(null)
   const [end,setEnd] = useState< NodeInterface | null >(null)
   const [wallnum,setWallnum] = useState<number>(0)
+  const [foundPath,setFoundPath] = useState<boolean>(false)
   
 
 
@@ -69,6 +70,32 @@ const Grid = () => {
       ClickedNode.Endpt = true;
     }
   }
+
+  const visualise = () => {
+    console.log("---------VISUALISING ------------------")
+    let startNode = GridNodes.current[start.row][start.column]
+    let endNode = GridNodes.current[end.row][end.column]
+    console.log(startNode)
+    console.log(endNode)
+
+
+    Dijkstra(startNode,endNode,GridNodes.current)
+    
+    setFoundPath(true)
+
+
+    console.log(endNode)
+
+    getPath(endNode)
+    
+
+    
+  }
+
+  // useEffect(()=> {
+
+  //   getPath(GridNodes.current[end.row][end.column])
+  // },[foundPath])
  
   return (
     <div>
@@ -99,7 +126,7 @@ const Grid = () => {
       
       </div>
       <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-      onClick = {()=>{Dijkstra(start,end,GridNodes.current)}} >Visualise</button>
+      onClick = {()=>{visualise()}} >Visualise</button>
     </div>
 
 
