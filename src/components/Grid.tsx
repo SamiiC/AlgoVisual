@@ -12,11 +12,19 @@ const Grid = () => {
   const [end,setEnd] = useState< NodeInterface | null >(null)
   const [wallnum,setWallnum] = useState<number>(0)
   const [foundPath,setFoundPath] = useState<boolean>(false)
+  const [visualising,setVisualising] = useState<boolean>(false)
   
 
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
+
+    if(visualising)
+    {
+      return;
+    }
     let ClickedNode = GridNodes.current[rowNum][colNum]
+
+    
 
     if(ClickedNode.Wall)
     {
@@ -82,14 +90,23 @@ const Grid = () => {
     
     setFoundPath(true)
     shortestPath = getPath(endNode)
-    
+    setVisualising(true)
 
 
     algorithmVisual(shortestPath,visitedNodes)
   }
 
-  const pathVisual = (  ) => {
+  const pathVisual = ( shortestPath: NodeInterface[] ) => {
+    for(let currNode = 1; currNode < shortestPath.length - 1; currNode++)
+    {
+      setTimeout(()=> {
+        let node = shortestPath[currNode]
+        let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
 
+        nodeToChange.className += " bg-red-700"
+          
+      },5 * currNode)
+    }
   }
 
   const algorithmVisual = (shortestPath: NodeInterface[], NodesInOrder: NodeInterface[]) => {
@@ -99,11 +116,20 @@ const Grid = () => {
         let node = NodesInOrder[currNode]
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
 
-        nodeToChange.className += " bg-violet-300 bg-opacity-30"
+
+
+        nodeToChange.className += " bg-violet-300"
+
+        if(NodesInOrder[currNode + 1].isDest)
+        {
+          pathVisual(shortestPath)
+        }
 
           
-      },20 * currNode)
+      },5 * currNode)
     }
+
+    
   }
 
   // useEffect(()=> {
