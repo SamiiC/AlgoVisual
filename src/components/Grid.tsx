@@ -42,7 +42,6 @@ const Grid = () => {
     //may need to change state in future... just a placeholder for now
     if(start && end)
     {
-      console.log("hi sds")
       ClickedNode.Wall = true;
       setWallnum(wallnum + 1)
       return;
@@ -75,21 +74,36 @@ const Grid = () => {
     console.log("---------VISUALISING ------------------")
     let startNode = GridNodes.current[start.row][start.column]
     let endNode = GridNodes.current[end.row][end.column]
-    console.log(startNode)
-    console.log(endNode)
+    let visitedNodes : NodeInterface[] = []
+    let shortestPath : NodeInterface[] = []
 
 
-    Dijkstra(startNode,endNode,GridNodes.current)
+    visitedNodes = Dijkstra(startNode,endNode,GridNodes.current)
     
     setFoundPath(true)
-
-
-    console.log(endNode)
-
-    getPath(endNode)
+    shortestPath = getPath(endNode)
     
 
-    
+
+    algorithmVisual(shortestPath,visitedNodes)
+  }
+
+  const pathVisual = (  ) => {
+
+  }
+
+  const algorithmVisual = (shortestPath: NodeInterface[], NodesInOrder: NodeInterface[]) => {
+    for(let currNode = 1; currNode < NodesInOrder.length - 1; currNode++)
+    {
+      setTimeout(()=> {
+        let node = NodesInOrder[currNode]
+        let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
+
+        nodeToChange.className += " bg-violet-300 bg-opacity-30"
+
+          
+      },20 * currNode)
+    }
   }
 
   // useEffect(()=> {

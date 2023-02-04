@@ -44,14 +44,14 @@ export const Dijkstra = (
           if (!curNode) {
                console.log("done3");
 
-               return [visitedNodes];
+               return visitedNodes;
           }
 
           if (curNode.Wall) continue;
           if (curNode.distFS === Infinity) {
                console.log("done2");
 
-               return [visitedNodes];
+               return visitedNodes;
           }
 
           curNode.Visited = true;
@@ -60,7 +60,7 @@ export const Dijkstra = (
           if (curNode.ID === endNode.ID) {
                curNode.isDest = true;
                console.log(visitedNodes);
-               return [visitedNodes];
+               return visitedNodes;
           }
 
           let neighbours = get_neighbours(curNode, grid);
