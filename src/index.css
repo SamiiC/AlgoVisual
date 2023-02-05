@@ -7,3 +7,11 @@
      height: 35px;
      border: solid #242625 1px;
 }
+
+.griddy {
+     grid-template-columns: repeat(67, 1fr);
+}
+
+.NodeChange {
+     border: dashed red;
+}

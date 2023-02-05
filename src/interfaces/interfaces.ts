@@ -9,4 +9,7 @@ export interface NodeInterface {
      distFS: number;
      previousCell: NodeInterface | null;
      isDest: boolean;
+     f: number;
+     g: number;
+     h: number;
 }

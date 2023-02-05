@@ -17,10 +17,10 @@ const Node = ({
      return (
           <div
                className={
-                    "border border-[#B5D8FD] w-8 h-8 " +
-                    (Startpt ? "bg-green-400" : "") +
-                    (Endpt ? "bg-rose-900" : "") +
-                    (Wall ? "bg-slate-800" : "")
+                    "border border-[#B5D8FD]  h-[28px] " +
+                    (Startpt ? "bg-green-400 " : "") +
+                    (Endpt ? "bg-rose-900 " : "") +
+                    (Wall ? "bg-slate-800 " : "")
                }
                {...props}
           ></div>

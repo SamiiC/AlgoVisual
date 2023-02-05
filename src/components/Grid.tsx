@@ -3,7 +3,9 @@ import { initNodeObj,convertGrid,getPath } from "../utility/utils"
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState,useEffect } from "react"
 import { Dijkstra } from "../main/dijkstra"
+import { Astar } from "../main/Astar"
 import Node from "./Node"
+
 
 const Grid = () => {
   // Dont want to reset value of grid after re-render
@@ -79,14 +81,14 @@ const Grid = () => {
   }
 
   const visualise = () => {
-    console.log("---------VISUALISING ------------------")
+    console.log("------------------VISUALISING ------------------")
     let startNode = GridNodes.current[start.row][start.column]
     let endNode = GridNodes.current[end.row][end.column]
     let visitedNodes : NodeInterface[] = []
     let shortestPath : NodeInterface[] = []
 
 
-    visitedNodes = Dijkstra(startNode,endNode,GridNodes.current)
+    visitedNodes = Astar(startNode,endNode,GridNodes.current)
     
     setFoundPath(true)
     shortestPath = getPath(endNode)
@@ -97,15 +99,15 @@ const Grid = () => {
   }
 
   const pathVisual = ( shortestPath: NodeInterface[] ) => {
+
     for(let currNode = 1; currNode < shortestPath.length - 1; currNode++)
     {
       setTimeout(()=> {
         let node = shortestPath[currNode]
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
-
-        nodeToChange.className += " bg-red-700"
+        nodeToChange.className += " bg-violet-600"
           
-      },5 * currNode)
+      },30 * currNode)
     }
   }
 
@@ -118,15 +120,17 @@ const Grid = () => {
 
 
 
-        nodeToChange.className += " bg-violet-300"
+        nodeToChange.className += " NodeChange"
 
         if(NodesInOrder[currNode + 1].isDest)
         {
           pathVisual(shortestPath)
+          setVisualising(false)
+
         }
 
           
-      },5 * currNode)
+      },40 * currNode)
     }
 
     
@@ -139,7 +143,9 @@ const Grid = () => {
  
   return (
     <div>
-      <div className="grid grid-cols-50Col overflow-auto w-full px-4 justify-start md:justify-center items-center my-3">
+      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+      onClick = {()=>{visualise()}} >Visualise</button>
+      <div className="border grid griddy w-full justify-start place-content-between my-3">
       
         {
         GridNodes.current.map((ROW,rowNum : number) =>{
@@ -165,8 +171,6 @@ const Grid = () => {
       
       
       </div>
-      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-      onClick = {()=>{visualise()}} >Visualise</button>
     </div>
 
 

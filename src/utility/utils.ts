@@ -1,7 +1,7 @@
 import { NodeInterface } from "../interfaces/interfaces";
 
-const ROW_NUM = 24;
-const COL_NUM = 55;
+const ROW_NUM = 29;
+const COL_NUM = 67;
 
 export const defaultCell: NodeInterface = {
      row: 0,
@@ -14,6 +14,9 @@ export const defaultCell: NodeInterface = {
      distFS: Infinity,
      previousCell: null,
      isDest: false,
+     f: 0,
+     g: Infinity,
+     h: 0,
 };
 
 // need to add to this in future...

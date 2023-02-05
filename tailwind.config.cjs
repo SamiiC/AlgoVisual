@@ -4,12 +4,12 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        '50Col': "repeat(55, 0fr)",
+        'Col': "repeat(67, 0fr)",
       },
       backgroundOpacity: {
         '10': '0.1',
         '20': '0.2',
-        '30': '0.3',
+        '40': '0.4',
        }
     },
   },
