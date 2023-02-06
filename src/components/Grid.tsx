@@ -105,7 +105,7 @@ const Grid = () => {
       setTimeout(()=> {
         let node = shortestPath[currNode]
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
-        nodeToChange.className += " bg-violet-600"
+        nodeToChange.className += " bg-slate-600"
           
       },30 * currNode)
     }
