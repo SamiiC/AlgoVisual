@@ -9,9 +9,13 @@
 }
 
 .griddy {
-     grid-template-columns: repeat(67, 1fr);
+     grid-template-columns: repeat(55, 1fr);
 }
 
 .NodeChange {
-     border: solid;
+     background-color: #c6edee;
+}
+
+.PathNode {
+     background-color: #bff89f;
 }

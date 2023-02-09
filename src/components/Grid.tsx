@@ -1,7 +1,7 @@
 import { initNodeObj,convertGrid,getPath } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
-import React, { useRef,useState,useEffect } from "react"
+import React, { useRef,useState,useEffect, MouseEvent } from "react"
 import { Dijkstra } from "../main/dijkstra"
 import { Astar } from "../main/Astar"
 import Node from "./Node"
@@ -12,18 +12,29 @@ const Grid = () => {
   let GridNodes = useRef(initNodeObj())
   const [start,setStart] = useState< NodeInterface | null >(null)
   const [end,setEnd] = useState< NodeInterface | null >(null)
-  const [wallnum,setWallnum] = useState<number>(0)
-  const [foundPath,setFoundPath] = useState<boolean>(false)
+  const [render,setRender] = useState<boolean>(false)
   const [visualising,setVisualising] = useState<boolean>(false)
-  
+  const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
 
+
+ 
+
+  const handle_mouse_enter = (rowNum: number, colNum: number) => {
+    setRender(!render)
+
+    let node = GridNodes.current[rowNum][colNum]
+    if(!isLeftClicked) return;
+
+    if(node.Startpt || node.Endpt) return;
+
+    node.Wall = true
+
+
+  }
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
 
-    if(visualising)
-    {
-      return;
-    }
+    if(visualising){return;}
     let ClickedNode = GridNodes.current[rowNum][colNum]
 
     
@@ -31,7 +42,7 @@ const Grid = () => {
     if(ClickedNode.Wall)
     {
       ClickedNode.Wall = false;
-      setWallnum(wallnum - 1)
+      setRender(!render)
       return;
     } 
     if(node.ID === start?.ID)
@@ -53,12 +64,9 @@ const Grid = () => {
     if(start && end)
     {
       ClickedNode.Wall = true;
-      setWallnum(wallnum + 1)
+      setRender(!render)
       return;
     }
-
-    //Start and end points choosen so anything after is wall
-
 
     if(!start)
     {
@@ -90,7 +98,6 @@ const Grid = () => {
 
     visitedNodes = Astar(startNode,endNode,GridNodes.current)
     
-    setFoundPath(true)
     shortestPath = getPath(endNode)
     setVisualising(true)
 
@@ -105,9 +112,9 @@ const Grid = () => {
       setTimeout(()=> {
         let node = shortestPath[currNode]
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
-        nodeToChange.className += " bg-slate-600"
+        nodeToChange.className += " PathNode"
           
-      },30 * currNode)
+      },50 * currNode)
     }
   }
 
@@ -136,16 +143,13 @@ const Grid = () => {
     
   }
 
-  // useEffect(()=> {
 
-  //   getPath(GridNodes.current[end.row][end.column])
-  // },[foundPath])
  
   return (
     <div>
       <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
       onClick = {()=>{visualise()}} >Visualise</button>
-      <div className="border grid griddy w-full justify-start place-content-between my-3">
+      <div className="grid griddy w-full justify-start my-3">
       
         {
         GridNodes.current.map((ROW,rowNum : number) =>{
@@ -158,6 +162,17 @@ const Grid = () => {
                     onClick = {() => {
                       NodeClicked(COL,rowNum,colNum);
 
+                    }}
+                    onMouseDown = {() => {
+                      setIsLeftClicked(true)
+                    }}
+
+                    onMouseEnter = {(e) => {
+                      handle_mouse_enter(rowNum,colNum)
+                    }}
+
+                    onMouseUp = {() => {
+                      setIsLeftClicked(false)
                     }}
                     
                     {...COL}/>
