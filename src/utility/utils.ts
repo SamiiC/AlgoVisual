@@ -65,3 +65,11 @@ export const getPath = (endNode: NodeInterface) => {
 
      return pathNodes;
 };
+
+export const setGridToWalls = (grid: NodeInterface[][]) => {
+     grid.forEach((row) => {
+          row.forEach((node) => {
+               node.Wall = true;
+          });
+     });
+};

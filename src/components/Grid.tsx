@@ -1,8 +1,9 @@
-import { initNodeObj,convertGrid,getPath } from "../utility/utils"
+import { initNodeObj,getPath,setGridToWalls } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState,useEffect, MouseEvent } from "react"
 import { Dijkstra } from "../main/dijkstra"
+import { primsAlgo } from "../main/prims"
 import { Astar } from "../main/Astar"
 import Node from "./Node"
 
@@ -17,27 +18,19 @@ const Grid = () => {
   const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
 
 
- 
-
   const handle_mouse_enter = (rowNum: number, colNum: number) => {
     setRender(!render)
 
     let node = GridNodes.current[rowNum][colNum]
     if(!isLeftClicked) return;
-
     if(node.Startpt || node.Endpt) return;
-
     node.Wall = true
-
-
   }
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
 
     if(visualising){return;}
     let ClickedNode = GridNodes.current[rowNum][colNum]
-
-    
 
     if(ClickedNode.Wall)
     {
@@ -52,7 +45,8 @@ const Grid = () => {
       ClickedNode.distFS = Infinity;
       return;
 
-    }if(node.ID === end?.ID)
+    }
+    if(node.ID === end?.ID)
     {
       setEnd(null)
       ClickedNode.Endpt = false;
@@ -78,7 +72,8 @@ const Grid = () => {
       ClickedNode.Startpt = true;
       ClickedNode.distFS = 0;
 
-    } else if(start)
+    } 
+    else if(start)
     {
       setEnd({
         ...ClickedNode,
@@ -97,11 +92,9 @@ const Grid = () => {
 
 
     visitedNodes = Astar(startNode,endNode,GridNodes.current)
-    
     shortestPath = getPath(endNode)
+
     setVisualising(true)
-
-
     algorithmVisual(shortestPath,visitedNodes)
   }
 
@@ -114,7 +107,7 @@ const Grid = () => {
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
         nodeToChange.className += " PathNode"
           
-      },50 * currNode)
+      }, 50 * currNode)
     }
   }
 
@@ -125,30 +118,30 @@ const Grid = () => {
         let node = NodesInOrder[currNode]
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
 
-
-
         nodeToChange.className += " NodeChange"
-
         if(NodesInOrder[currNode + 1].isDest)
         {
           pathVisual(shortestPath)
           setVisualising(false)
-
         }
-
-          
       },40 * currNode)
     }
-
-    
   }
 
+  const prim = (grid: NodeInterface[][]) => {
+    setGridToWalls(grid)
+    primsAlgo(GridNodes.current)
+    setRender(!render)
+  }
 
- 
   return (
     <div>
       <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
       onClick = {()=>{visualise()}} >Visualise</button>
+
+      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
+      onClick = {()=>{ prim(GridNodes.current)}} >Fill Grid</button>
+
       <div className="grid griddy w-full justify-start my-3">
       
         {
@@ -186,6 +179,7 @@ const Grid = () => {
       
       
       </div>
+      <button>HELLOOOOOOOOOOOOOOOOOOOOOOO</button>
     </div>
 
 
