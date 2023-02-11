@@ -29,7 +29,7 @@ const calc_heuristic = (current: NodeInterface, end: NodeInterface) => {
 
      var heuristic = dx + dy;
 
-     // need to multiply by 1.001 as there are multiple 'shortest' path avaliable
+     // need to multiply by 1.001 as there are multiple 'shortest' paths avaliable
      // 1.001 breaks the ties in nodes with the same f value
      heuristic = heuristic * 1.001;
 

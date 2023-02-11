@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'Col': "repeat(60, 0fr)",
+        'Col': "repeat(30, 0fr)",
+      },
+      fontFamily: {
+        'rmono': ['"Roboto Mono"','monospace']
       },
       backgroundOpacity: {
         '10': '0.1',

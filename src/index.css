@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
 .node {
      width: 35px;
@@ -13,7 +14,7 @@
 }
 
 .NodeChange {
-     background-color: #c6edee;
+     background-color: #94a3b8;
 }
 
 .PathNode {

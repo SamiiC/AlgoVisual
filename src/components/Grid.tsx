@@ -4,8 +4,11 @@ import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState,useEffect, MouseEvent } from "react"
 import { Dijkstra } from "../main/dijkstra"
 import { primsAlgo } from "../main/prims"
+import { DepthFirstSearch } from "../main/dfs"
 import { Astar } from "../main/Astar"
 import Node from "./Node"
+import Divider from "./Divider"
+import MenuButton from "./MenuButton"
 
 
 const Grid = () => {
@@ -16,6 +19,9 @@ const Grid = () => {
   const [render,setRender] = useState<boolean>(false)
   const [visualising,setVisualising] = useState<boolean>(false)
   const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
+  const [algo,setAlgo] = useState<string>("A*")
+  const [AlgoOption,setAlgoOption] = useState<boolean>(true)
+
 
 
   const handle_mouse_enter = (rowNum: number, colNum: number) => {
@@ -90,9 +96,26 @@ const Grid = () => {
     let visitedNodes : NodeInterface[] = []
     let shortestPath : NodeInterface[] = []
 
+    switch (algo) {
+      case "A*":
+        visitedNodes = Astar(startNode,endNode, GridNodes.current)
+        shortestPath = getPath(endNode)
+        alert("NOOOOOOO")
+        break;
+      case "DFS":
+        visitedNodes = DepthFirstSearch(GridNodes.current,startNode,endNode)
+        shortestPath = getPath(endNode)
+        break;
+      case "Dijkstra":
+        visitedNodes = Dijkstra(startNode,endNode, GridNodes.current)
+        shortestPath = getPath(endNode)
+        break;
+    
+      case "":
+        alert("No Algorithm Was Selected")
+        return;
+    }
 
-    visitedNodes = Astar(startNode,endNode,GridNodes.current)
-    shortestPath = getPath(endNode)
 
     setVisualising(true)
     algorithmVisual(shortestPath,visitedNodes)
@@ -107,7 +130,7 @@ const Grid = () => {
         let nodeToChange = document.getElementById(`node-${node.row}-${node.column}`)
         nodeToChange.className += " PathNode"
           
-      }, 50 * currNode)
+      },currNode)
     }
   }
 
@@ -136,13 +159,42 @@ const Grid = () => {
 
   return (
     <div>
-      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-      onClick = {()=>{visualise()}} >Visualise</button>
 
-      <button className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" 
-      onClick = {()=>{ prim(GridNodes.current)}} >Fill Grid</button>
+      <div className="flex justify-start min-w-0 min-h-0 bg-[#CBD0BF] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono">
 
-      <div className="grid griddy w-full justify-start my-3">
+        <MenuButton onClick={() => {visualise()}} btnText="Vizualise"/>
+        <MenuButton onClick={() => {prim(GridNodes.current)}} btnText="Generate Maze" />
+
+        <Divider/>  
+
+        <MenuButton btnText="Clear Grid"/> 
+        <MenuButton btnText="Clear Path"/> 
+
+        <Divider/> 
+
+            { AlgoOption ?
+            <React.Fragment>
+                <MenuButton onClick={() => {setAlgo("A*")}} btnText="A*"  />
+                <MenuButton onClick={() => {setAlgo("Dijkstra")}} btnText="Dijkstra" />
+                <MenuButton onClick={() => {setAlgo("DFS")}} btnText="Depth First Search" />
+                <MenuButton btnText="Breadth First Search" />
+            </React.Fragment>
+            : 
+            <React.Fragment>
+                <MenuButton btnText="Randomised Prim" />
+                <MenuButton btnText="Recursive" />
+            </React.Fragment>
+            } 
+          
+        
+          
+           
+
+
+      </div>
+
+
+      <div className="grid griddy w-full justify-start sticky">
       
         {
         GridNodes.current.map((ROW,rowNum : number) =>{
@@ -179,7 +231,7 @@ const Grid = () => {
       
       
       </div>
-      <button>HELLOOOOOOOOOOOOOOOOOOOOOOO</button>
+      
     </div>
 
 
