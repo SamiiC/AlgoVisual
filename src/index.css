@@ -3,14 +3,8 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
-.node {
-     width: 35px;
-     height: 35px;
-     border: solid #242625 1px;
-}
-
 .griddy {
-     grid-template-columns: repeat(55, 1fr);
+     grid-template-columns: repeat(65, 1fr);
 }
 
 .NodeChange {
@@ -19,4 +13,14 @@
 
 .PathNode {
      background-color: #bff89f;
+}
+
+input[type="radio"] {
+     visibility: hidden;
+     height: 0;
+     width: 0;
+}
+
+input[type="radio"]:checked + label {
+     color: #555a56;
 }

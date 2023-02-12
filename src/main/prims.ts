@@ -1,8 +1,8 @@
 import { NodeInterface } from "../interfaces/interfaces";
 import { convertGrid } from "../utility/utils";
 
-let Width = 55;
-let Height = 24;
+let Width = 65;
+let Height = 26;
 export const primsAlgo = (grid: NodeInterface[][]) => {
      let randX = Math.floor(Math.random() * (Width - 10 - 10 + 1)) + 10;
      let randY = Math.floor(Math.random() * (Height - 2 - 10 + 1)) + 10;

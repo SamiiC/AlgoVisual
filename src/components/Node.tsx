@@ -17,7 +17,7 @@ const Node = ({
      return (
           <div
                className={
-                    "border border-[#94a3b8] h-[34px] " +
+                    "border border-[#94a3b8] h-[30px] " +
                     (Startpt ? "bg-green-400 " : "") +
                     (Endpt ? "bg-rose-900 " : "") +
                     (Wall ? "bg-[#1f2937] " : "")

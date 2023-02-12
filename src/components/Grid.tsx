@@ -9,6 +9,7 @@ import { Astar } from "../main/Astar"
 import Node from "./Node"
 import Divider from "./Divider"
 import MenuButton from "./MenuButton"
+import AlgoOptions from "./AlgoOptions"
 
 
 const Grid = () => {
@@ -19,8 +20,8 @@ const Grid = () => {
   const [render,setRender] = useState<boolean>(false)
   const [visualising,setVisualising] = useState<boolean>(false)
   const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
-  const [algo,setAlgo] = useState<string>("A*")
-  const [AlgoOption,setAlgoOption] = useState<boolean>(true)
+  const [algo,setAlgo] = useState<string>("")
+  const [mazeAlgo,setMazeAlgo] = useState<string>("")
 
 
 
@@ -100,7 +101,6 @@ const Grid = () => {
       case "A*":
         visitedNodes = Astar(startNode,endNode, GridNodes.current)
         shortestPath = getPath(endNode)
-        alert("NOOOOOOO")
         break;
       case "DFS":
         visitedNodes = DepthFirstSearch(GridNodes.current,startNode,endNode)
@@ -160,7 +160,7 @@ const Grid = () => {
   return (
     <div>
 
-      <div className="flex justify-start min-w-0 min-h-0 bg-[#CBD0BF] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono">
+      <div className="flex justify-start min-w-0 min-h-0 bg-[#CBD0BF] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
 
         <MenuButton onClick={() => {visualise()}} btnText="Vizualise"/>
         <MenuButton onClick={() => {prim(GridNodes.current)}} btnText="Generate Maze" />
@@ -172,25 +172,22 @@ const Grid = () => {
 
         <Divider/> 
 
-            { AlgoOption ?
-            <React.Fragment>
-                <MenuButton onClick={() => {setAlgo("A*")}} btnText="A*"  />
-                <MenuButton onClick={() => {setAlgo("Dijkstra")}} btnText="Dijkstra" />
-                <MenuButton onClick={() => {setAlgo("DFS")}} btnText="Depth First Search" />
-                <MenuButton btnText="Breadth First Search" />
-            </React.Fragment>
-            : 
-            <React.Fragment>
-                <MenuButton btnText="Randomised Prim" />
-                <MenuButton btnText="Recursive" />
-            </React.Fragment>
-            } 
-          
-        
-          
-           
+            
+          <React.Fragment>
+            <AlgoOptions id="A*" name ="A*" onClick={() => {setAlgo("A*")}}/>
+            <AlgoOptions id="Dijkstra" name ="Dijkstra" onClick={() => {setAlgo("Dijkstra")}}/>
+            <AlgoOptions id="DFS" name ="Depth First Search" onClick={() => {setAlgo("DFS")}}/>
+            <AlgoOptions id="BFS" name ="Breadth First Search" onClick={() => {setAlgo("Dijkstra")}}/>
+          </React.Fragment>
 
+        <Divider/> 
+            
+          <React.Fragment>
+              <AlgoOptions id="prim" name ="Randomized Prim" onClick={() => {setMazeAlgo("prim")}}/>
+              <AlgoOptions id="prim" name ="Recursive" onClick={() => {setAlgo("recursive")}}/>
 
+          </React.Fragment>
+            
       </div>
 
 
