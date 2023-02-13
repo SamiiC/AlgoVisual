@@ -162,7 +162,7 @@ const Grid = () => {
 
       <div className="flex justify-start min-w-0 min-h-0 bg-[#CBD0BF] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
 
-        <MenuButton onClick={() => {visualise()}} btnText="Vizualise"/>
+        <MenuButton onClick={() => {visualise()}} btnText="Visualise"/>
         <MenuButton onClick={() => {prim(GridNodes.current)}} btnText="Generate Maze" />
 
         <Divider/>  
@@ -184,7 +184,7 @@ const Grid = () => {
             
           <React.Fragment>
               <AlgoOptions id="prim" name ="Randomized Prim" onClick={() => {setMazeAlgo("prim")}}/>
-              <AlgoOptions id="prim" name ="Recursive" onClick={() => {setAlgo("recursive")}}/>
+              <AlgoOptions id="recursive" name ="Recursive" onClick={() => {setMazeAlgo("recursive")}}/>
 
           </React.Fragment>
             
