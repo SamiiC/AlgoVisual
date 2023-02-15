@@ -22,6 +22,7 @@ const Grid = () => {
   const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
   const [algo,setAlgo] = useState<string>("")
   const [mazeAlgo,setMazeAlgo] = useState<string>("")
+  const [disable,setDisable] = useState<boolean>(false)
 
 
 
@@ -48,18 +49,19 @@ const Grid = () => {
         node.classList.remove("PathNode")
       }
     })
-
     
   }
 
   const clearPathNodes = () => {
     GridNodes.current = clearPath(GridNodes.current,false)
+
     clearNodeCSS()
 
   }
 
   const clearGrid = () => {
     GridNodes.current = clearPath(GridNodes.current,true)
+    setRender(!render)
     clearNodeCSS()
 
   }
@@ -181,7 +183,8 @@ const Grid = () => {
     }
   }
 
-  const prim = (grid: NodeInterface[][]) => {
+  const MazeGeneration = (grid: NodeInterface[][]) => {
+    clearPathNodes()
     setGridToWalls(grid)
     primsAlgo(GridNodes.current)
     setRender(!render)
@@ -192,13 +195,13 @@ const Grid = () => {
 
       <div className="flex justify-start min-w-0 min-h-0 bg-[#ECECEC] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
 
-        <MenuButton onClick={() => {visualise()}} btnText="Visualise"/>
-        <MenuButton onClick={() => {prim(GridNodes.current)}} btnText="Generate Maze" />
+        <MenuButton disable={visualising} onClick={() => {visualise()}} btnText="Visualise"/>
+        <MenuButton disable={visualising} onClick={() => {MazeGeneration(GridNodes.current)}} btnText="Generate Maze" />
 
         <Divider/>  
 
-        <MenuButton btnText="Clear Grid" onClick={() => {clearGrid()}}/> 
-        <MenuButton btnText="Clear Path" onClick={() => {clearPathNodes()}} /> 
+        <MenuButton disable={visualising} btnText="Clear Grid" onClick={() => {clearGrid()}}/> 
+        <MenuButton disable ={visualising} btnText="Clear Path" onClick={() => {clearPathNodes()}} /> 
 
         <Divider/> 
 
