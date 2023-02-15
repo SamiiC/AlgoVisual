@@ -73,3 +73,23 @@ export const setGridToWalls = (grid: NodeInterface[][]) => {
           });
      });
 };
+
+// These could be merged with the initNodeObj but I prefer the redundancy
+export const clearPath = (grid: NodeInterface[][], clearwalls: boolean) => {
+     grid.forEach((row) => {
+          row.forEach((node) => {
+               if (node.Visited) {
+                    node.Visited = false;
+                    node.isDest = false;
+                    node.distFS = Infinity;
+                    node.previousCell = null;
+               }
+
+               if (clearwalls) {
+                    node.Wall = false;
+               }
+          });
+     });
+
+     return grid;
+};

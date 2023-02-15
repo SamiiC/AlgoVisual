@@ -1,4 +1,4 @@
-import { initNodeObj,getPath,setGridToWalls } from "../utility/utils"
+import { initNodeObj,getPath,setGridToWalls,clearPath } from "../utility/utils"
 
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState,useEffect, MouseEvent } from "react"
@@ -32,6 +32,36 @@ const Grid = () => {
     if(!isLeftClicked) return;
     if(node.Startpt || node.Endpt) return;
     node.Wall = true
+  }
+
+  const clearNodeCSS = () => {
+    
+    document.querySelectorAll('.node').forEach((node) => {
+
+      if(node.classList.contains("NodeChange"))
+      {
+        node.classList.remove("NodeChange")
+      } 
+      if(node.classList.contains("PathNode"))
+      {
+
+        node.classList.remove("PathNode")
+      }
+    })
+
+    
+  }
+
+  const clearPathNodes = () => {
+    GridNodes.current = clearPath(GridNodes.current,false)
+    clearNodeCSS()
+
+  }
+
+  const clearGrid = () => {
+    GridNodes.current = clearPath(GridNodes.current,true)
+    clearNodeCSS()
+
   }
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
@@ -160,15 +190,15 @@ const Grid = () => {
   return (
     <div>
 
-      <div className="flex justify-start min-w-0 min-h-0 bg-[#CBD0BF] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
+      <div className="flex justify-start min-w-0 min-h-0 bg-[#ECECEC] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
 
         <MenuButton onClick={() => {visualise()}} btnText="Visualise"/>
         <MenuButton onClick={() => {prim(GridNodes.current)}} btnText="Generate Maze" />
 
         <Divider/>  
 
-        <MenuButton btnText="Clear Grid"/> 
-        <MenuButton btnText="Clear Path"/> 
+        <MenuButton btnText="Clear Grid" onClick={() => {clearGrid()}}/> 
+        <MenuButton btnText="Clear Path" onClick={() => {clearPathNodes()}} /> 
 
         <Divider/> 
 
@@ -191,7 +221,7 @@ const Grid = () => {
       </div>
 
 
-      <div className="grid griddy w-full justify-start sticky">
+      <div className="grid griddy w-full justify-start">
       
         {
         GridNodes.current.map((ROW,rowNum : number) =>{
