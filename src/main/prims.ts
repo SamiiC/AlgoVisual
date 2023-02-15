@@ -1,11 +1,16 @@
 import { NodeInterface } from "../interfaces/interfaces";
-import { convertGrid } from "../utility/utils";
+import { Random } from "random-js";
 
 let Width = 65;
-let Height = 26;
+let Height = 27;
+
 export const primsAlgo = (grid: NodeInterface[][]) => {
-     let randX = Math.floor(Math.random() * (Width - 10 - 10 + 1)) + 10;
-     let randY = Math.floor(Math.random() * (Height - 2 - 10 + 1)) + 10;
+     console.log("seeding stuff");
+     const random = new Random();
+
+     const randX = random.integer(1, Width - 10);
+     console.log(randX);
+     let randY = random.integer(1, Height - 10);
 
      let mazeSet = new Set();
      let startNode = grid[randY][randX];
@@ -20,7 +25,7 @@ export const primsAlgo = (grid: NodeInterface[][]) => {
 
      while (mazeSet.size > 0) {
           let iter: any = [...mazeSet.values()];
-          let randNode = iter[Math.floor(Math.random() * iter.length)];
+          let randNode = iter[random.integer(0, iter.length - 1)];
 
           mazeSet.delete(randNode);
 
@@ -29,8 +34,7 @@ export const primsAlgo = (grid: NodeInterface[][]) => {
           if (ns.size > 0) {
                iter = [...ns.values()];
 
-               let randNeighbour =
-                    iter[Math.floor(Math.random() * iter.length)];
+               let randNeighbour = iter[random.integer(0, iter.length - 1)];
                connector(
                     grid,
                     randNode.row,
@@ -55,7 +59,7 @@ const getFrontiers = (node: NodeInterface, grid: NodeInterface[][]) => {
 
      let f: any = new Set();
 
-     if (x >= 0 && x < Width && y >= 0 && y < Height) {
+     if (x >= 0 && x <= Width + 1 && y >= 0 && y <= Height + 1) {
           if (x > 2 && grid[y][x - 2].Wall) {
                f.add(grid[y][x - 2]);
           }
@@ -81,7 +85,7 @@ const getNeighbours = (node: NodeInterface, grid: NodeInterface[][]) => {
      let x = node.column;
      let y = node.row;
 
-     if (x >= 0 && x < Width && y >= 0 && y < Height) {
+     if (x >= 0 && x <= Width + 1 && y >= 0 && y <= Height + 1) {
           if (x > 2 && !grid[y][x - 2].Wall) {
                n.add(grid[y][x - 2]);
           }

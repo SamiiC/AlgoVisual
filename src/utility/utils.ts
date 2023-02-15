@@ -1,6 +1,6 @@
 import { NodeInterface } from "../interfaces/interfaces";
 
-const ROW_NUM = 26;
+const ROW_NUM = 27;
 const COL_NUM = 65;
 
 export const defaultCell: NodeInterface = {

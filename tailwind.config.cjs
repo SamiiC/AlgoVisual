@@ -7,7 +7,7 @@ module.exports = {
         'Col': "repeat(30, 0fr)",
       },
       fontFamily: {
-        'rmono': ['"Roboto Mono"','monospace']
+        'o2': ['"Oxygen"','sans-serif']
       },
       backgroundOpacity: {
         '10': '0.1',

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oxygen&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,6 +13,7 @@
 
 .PathNode {
      background-color: #bff89f;
+     border-color: #bff89f;
 }
 
 input[type="radio"] {
@@ -22,5 +23,5 @@ input[type="radio"] {
 }
 
 input[type="radio"]:checked + label {
-     color: #555a56;
+     color: #ff360d;
 }

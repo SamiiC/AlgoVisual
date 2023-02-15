@@ -20,7 +20,7 @@ const Node = ({
                     "node border border-[#BED8F6] h-[30px] " +
                     (Startpt ? "bg-[#83D934] " : "") +
                     (Endpt ? "bg-[#CB4B0E] " : "") +
-                    (Wall ? "bg-[#1f2937] " : "")
+                    (Wall ? "bg-[#1f2937] border-[#1f2937] " : "")
                }
                {...props}
           ></div>

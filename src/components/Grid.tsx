@@ -10,6 +10,8 @@ import Node from "./Node"
 import Divider from "./Divider"
 import MenuButton from "./MenuButton"
 import AlgoOptions from "./AlgoOptions"
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 const Grid = () => {
@@ -23,6 +25,7 @@ const Grid = () => {
   const [algo,setAlgo] = useState<string>("")
   const [mazeAlgo,setMazeAlgo] = useState<string>("")
   const [disable,setDisable] = useState<boolean>(false)
+  let speed : any = useRef(40)
 
 
 
@@ -123,6 +126,8 @@ const Grid = () => {
   }
 
   const visualise = () => {
+    clearPathNodes()
+
     console.log("------------------VISUALISING ------------------")
     let startNode = GridNodes.current[start.row][start.column]
     let endNode = GridNodes.current[end.row][end.column]
@@ -147,7 +152,6 @@ const Grid = () => {
         alert("No Algorithm Was Selected")
         return;
     }
-
 
     setVisualising(true)
     algorithmVisual(shortestPath,visitedNodes)
@@ -179,7 +183,7 @@ const Grid = () => {
           pathVisual(shortestPath)
           setVisualising(false)
         }
-      },40 * currNode)
+      },speed.current * currNode)
     }
   }
 
@@ -191,9 +195,10 @@ const Grid = () => {
   }
 
   return (
+    
     <div>
 
-      <div className="flex justify-start min-w-0 min-h-0 bg-[#ECECEC] rounded-[10px] h-12 mb-8 w-min truncate container mx-auto mt-12 font-rmono items-center">
+      <div className="flex justify-start min-w-0 min-h-0 bg-[#ECECEC] rounded-[10px] h-12 mb-2 text-sm w-min truncate container mx-auto mt-12 font-o2 items-center">
 
         <MenuButton disable={visualising} onClick={() => {visualise()}} btnText="Visualise"/>
         <MenuButton disable={visualising} onClick={() => {MazeGeneration(GridNodes.current)}} btnText="Generate Maze" />
@@ -220,6 +225,17 @@ const Grid = () => {
               <AlgoOptions id="recursive" name ="Recursive" onClick={() => {setMazeAlgo("recursive")}}/>
 
           </React.Fragment>
+        <Divider/> 
+
+
+        <div className="  font-rmono text-[#B7B7B7] mx-auto pr-5 pl-5 w-48  ">
+          <p className="font-semibold text-black pl-14">Speed</p>
+          <Slider onChange={(nextValues) => {speed.current = (nextValues);console.log('Change:', speed.current) ;}}
+                  defaultValue = {40}
+                  railStyle={{ backgroundColor: 'red' }}  />
+
+        </div>
+
             
       </div>
 
