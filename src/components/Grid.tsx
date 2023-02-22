@@ -232,7 +232,8 @@ const Grid = () => {
           <p className="font-semibold text-black pl-14">Speed</p>
           <Slider onChange={(nextValues) => {speed.current = (nextValues);console.log('Change:', speed.current) ;}}
                   defaultValue = {40}
-                  railStyle={{ backgroundColor: 'red' }}  />
+                  railStyle={{ backgroundColor: 'red' }}  
+                  reverse = {true}  />
 
         </div>
 
