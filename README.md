@@ -1,5 +1,5 @@
 # Pathfinding Visualiser
-Visualiser for multiple different pathfinding algorithms including:
+Visualiser for multiple different algorithms including:
 - A* Pathfinding
 - Dijkstra's Pathfinding
 - Depth First Search
