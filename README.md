@@ -17,4 +17,4 @@ Clone the project and run:
 
 `npm build` to build the app
 
-`npm preview` to then start app on localhost
+`npm preview` to then start the app on localhost
