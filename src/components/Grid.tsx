@@ -1,11 +1,7 @@
 import { initNodeObj,getPath,setGridToWalls,clearPath } from "../utility/utils"
-
+import { Astar, DepthFirstSearch, Dijkstra, primsAlgo } from "../main/index"
 import { NodeInterface } from "../interfaces/interfaces"
-import React, { useRef,useState,useEffect, MouseEvent } from "react"
-import { Dijkstra } from "../main/dijkstra"
-import { primsAlgo } from "../main/prims"
-import { DepthFirstSearch } from "../main/dfs"
-import { Astar } from "../main/Astar"
+import React, { useRef,useState} from "react"
 import Node from "./Node"
 import Divider from "./Divider"
 import MenuButton from "./MenuButton"
@@ -24,7 +20,6 @@ const Grid = () => {
   const  [isLeftClicked,setIsLeftClicked] = useState<boolean>(false)
   const [algo,setAlgo] = useState<string>("")
   const [mazeAlgo,setMazeAlgo] = useState<string>("")
-  const [disable,setDisable] = useState<boolean>(false)
   let speed : any = useRef(40)
 
 
@@ -34,46 +29,33 @@ const Grid = () => {
 
     let node = GridNodes.current[rowNum][colNum]
     if(!isLeftClicked) return;
-    if(node.Startpt || node.Endpt) return;
+    if(node.Startpt || node.Endpt)  return;
     node.Wall = true
   }
 
   const clearNodeCSS = () => {
-    
     document.querySelectorAll('.node').forEach((node) => {
-
-      if(node.classList.contains("NodeChange"))
-      {
-        node.classList.remove("NodeChange")
-      } 
-      if(node.classList.contains("PathNode"))
-      {
-
-        node.classList.remove("PathNode")
-      }
+      if(node.classList.contains("NodeChange")) { node.classList.remove("NodeChange") } 
+      if(node.classList.contains("PathNode")) { node.classList.remove("PathNode") }
     })
     
   }
 
   const clearPathNodes = () => {
     GridNodes.current = clearPath(GridNodes.current,false)
-
     clearNodeCSS()
-
   }
 
   const clearGrid = () => {
     GridNodes.current = clearPath(GridNodes.current,true)
     setRender(!render)
     clearNodeCSS()
-
   }
 
   const NodeClicked = (node: NodeInterface, rowNum: number, colNum: number) => {
-
     if(visualising){return;}
     let ClickedNode = GridNodes.current[rowNum][colNum]
-
+    
     if(ClickedNode.Wall)
     {
       ClickedNode.Wall = false;
@@ -96,7 +78,6 @@ const Grid = () => {
       return;
     }
 
-    //may need to change state in future... just a placeholder for now
     if(start && end)
     {
       ClickedNode.Wall = true;
@@ -212,17 +193,17 @@ const Grid = () => {
 
             
           <React.Fragment>
-            <AlgoOptions id="A*" name ="A*" onClick={() => {setAlgo("A*")}}/>
-            <AlgoOptions id="Dijkstra" name ="Dijkstra" onClick={() => {setAlgo("Dijkstra")}}/>
-            <AlgoOptions id="DFS" name ="Depth First Search" onClick={() => {setAlgo("DFS")}}/>
-            <AlgoOptions id="BFS" name ="Breadth First Search" onClick={() => {setAlgo("Dijkstra")}}/>
+            <AlgoOptions id="A*" name ="A*" group="opt" onClick={() => {setAlgo("A*")}}/>
+            <AlgoOptions id="Dijkstra" name ="Dijkstra" group="opt" onClick={() => {setAlgo("Dijkstra")}}/>
+            <AlgoOptions id="DFS" name ="Depth First Search" group="opt" onClick={() => {setAlgo("DFS")}}/>
+            <AlgoOptions id="BFS" name ="Breadth First Search" group="opt" onClick={() => {setAlgo("Dijkstra")}}/>
           </React.Fragment>
 
         <Divider/> 
             
           <React.Fragment>
-              <AlgoOptions id="prim" name ="Randomized Prim" onClick={() => {setMazeAlgo("prim")}}/>
-              <AlgoOptions id="recursive" name ="Recursive" onClick={() => {setMazeAlgo("recursive")}}/>
+              <AlgoOptions id="prim" name ="Randomized Prim" group="mazeopt" onClick={() => {setMazeAlgo("prim")}}/>
+              <AlgoOptions id="recursive" name ="Recursive" group="mazeopt" onClick={() => {setMazeAlgo("recursive")}}/>
 
           </React.Fragment>
         <Divider/> 
