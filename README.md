@@ -15,6 +15,6 @@ Clone the project and run:
 
 `npm install` to install dependancies
 
-`npm build` to build the app
+`npm run build` to build the app
 
-`npm preview` to then start the app on localhost
+`npm run preview` to then start the app on localhost
