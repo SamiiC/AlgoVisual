@@ -1,5 +1,5 @@
 import { initNodeObj,getPath,setGridToWalls,clearPath } from "../utility/utils"
-import { Astar, DepthFirstSearch, Dijkstra, primsAlgo } from "../main/index"
+import { Astar, Dijkstra, primsAlgo,blindsearch} from "../main/index"
 import { NodeInterface } from "../interfaces/interfaces"
 import React, { useRef,useState} from "react"
 import Node from "./Node"
@@ -121,14 +121,18 @@ const Grid = () => {
         shortestPath = getPath(endNode)
         break;
       case "DFS":
-        visitedNodes = DepthFirstSearch(GridNodes.current,startNode,endNode)
+        visitedNodes = blindsearch("DFS", GridNodes.current,startNode,endNode)
         shortestPath = getPath(endNode)
         break;
       case "Dijkstra":
         visitedNodes = Dijkstra(startNode,endNode, GridNodes.current)
         shortestPath = getPath(endNode)
         break;
-    
+      
+      case "BFS":
+        visitedNodes = blindsearch("BFS", GridNodes.current,startNode,endNode)
+        shortestPath = getPath(endNode)
+        break;
       case "":
         alert("No Algorithm Was Selected")
         return;
@@ -196,7 +200,7 @@ const Grid = () => {
             <AlgoOptions id="A*" name ="A*" group="opt" onClick={() => {setAlgo("A*")}}/>
             <AlgoOptions id="Dijkstra" name ="Dijkstra" group="opt" onClick={() => {setAlgo("Dijkstra")}}/>
             <AlgoOptions id="DFS" name ="Depth First Search" group="opt" onClick={() => {setAlgo("DFS")}}/>
-            <AlgoOptions id="BFS" name ="Breadth First Search" group="opt" onClick={() => {setAlgo("Dijkstra")}}/>
+            <AlgoOptions id="BFS" name ="Breadth First Search" group="opt" onClick={() => {setAlgo("BFS")}}/>
           </React.Fragment>
 
         <Divider/> 
@@ -227,14 +231,16 @@ const Grid = () => {
         {
         GridNodes.current.map((ROW,rowNum : number) =>{
           return (
+            
+            
             <React.Fragment key = {rowNum}>
             
-              {ROW.map((COL,colNum)=> {
+              {ROW.map((node,colNum)=> {
                 return (
-                    <Node key = {colNum} id ={`node-${COL.row}-${COL.column}`} 
+                    <Node key = {colNum} id ={`node-${node.row}-${node.column}`} 
                     onClick = {() => {
-                      NodeClicked(COL,rowNum,colNum);
-
+                      NodeClicked(node,rowNum,colNum);
+                    
                     }}
                     onMouseDown = {() => {
                       setIsLeftClicked(true)
@@ -248,13 +254,18 @@ const Grid = () => {
                       setIsLeftClicked(false)
                     }}
                     
-                    {...COL}/>
+                    {...node}/>
+                    
                 )
+
               })
               }
+          
             </React.Fragment>
+            
           )
         })
+
       }
       
       
